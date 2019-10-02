@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "Make sure your public SSH key is in the target server's chef's authorized_keys file."
+
+username=$(whoami)
+
+if [ $username == "root" ]; then
+  echo "Please enter your username: "
+  read username
+fi
+
+echo "Please enter server name: "
+read server
+
+echo "Please enter the name of the Ruby config file to execute: "
+read file
+
+inspec exec $file -t ssh://chef@$server -i /home/$username/.ssh/id_rsa
